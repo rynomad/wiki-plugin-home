@@ -152,7 +152,7 @@ const populateWorkspaces = async ($item, item) => {
       break;
       default:
     }
-  })
+  })    
 }
 
 const emit = ($item, item) => {
