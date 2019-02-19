@@ -60,11 +60,27 @@ const addCSS = () => {
   document.getElementsByTagName('head')[0].appendChild(style);
 }
 
+const wait = async () => new Promise((resolve) => setTimeout(resolve, 100))
 
-const populateIndex = ($item, sitemap) => {
+const getSitemap = async () => {
+  while (!wiki || !wiki.neighborhood[location.host] || !wiki.neighborhood[location.host].sitemap){
+    await wait()
+  }
+  console.log("HAVE??????", wiki.neighborhood[location.host].sitemap)
+  return wiki.neighborhood[location.host].sitemap
+}
+
+
+const populateIndex = async ($item, item) => {
   const $table = $('<table style="width:100%;"></table>')
+  let sitemap = await getSitemap()
   sitemap = sitemap.sort(({date : a}, {date : b}) => b - a )
-  
+  $item.append(`
+  <div class="plugin-header">
+    <h3>Index   : ${location.host.split(':')[0]} </h3>
+  </div>
+`)
+
   for (const entry of sitemap){
     const d = new Date(entry.date)
     const row = $(`
@@ -119,8 +135,10 @@ const populateWorkspaces = async ($item, item) => {
 
 const emit = ($item, item) => {
   console.log('EMIT INDEX', $item, item, wiki.neighborhood)
-  const self = wiki.neighborhood[location.host]
-  populateWorkspaces($item, item)
+  return Promise.all([
+    populateWorkspaces($item, item),
+    populateIndex($item, item)
+  ])
 }
 
 const bind = ($item, item) => {
@@ -130,10 +148,8 @@ const bind = ($item, item) => {
     const name = $(this).data('workspace-name')
     const slugs = item.workspaces[name]
     const self = wiki.neighborhood[location.host]
-    const pages_in = self.sitemap.filter(({slug}) => slugs.indexOf(slug) >= 0)
     console.log('SLUGS', slugs)
     setTimeout(() => {
-      const slugs = pages_in.map(({slug}) => slug)
       if (!slugs.length) return
       const first = slugs.shift()
       console.log('first?', first, slugs)
@@ -244,6 +260,6 @@ const bind = ($item, item) => {
   })    
 }
 
-window.plugins.index = {emit, bind}
+window.plugins.home = {emit, bind}
 
 addCSS()

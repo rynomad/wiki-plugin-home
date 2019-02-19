@@ -1,0 +1,260 @@
+{
+  "title": "Welcome Home",
+  "story": [
+    {
+      "type": "paragraph",
+      "id": "cac6170c001242a1",
+      "text": "Welcome to [[Wiki Desktop]], an experimental fork of [[Federated Wiki]] "
+    },
+    {
+      "type": "home",
+      "id": "9f72e002bc46e8a4",
+      "text": "something",
+      "workspaces": {
+        "how to wiki": [
+          "how-to-wiki"
+        ]
+      }
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Welcome Home",
+        "story": []
+      },
+      "date": 1550554957428
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "cac6170c001242a1"
+      },
+      "id": "cac6170c001242a1",
+      "type": "add",
+      "date": 1550554958572
+    },
+    {
+      "type": "edit",
+      "id": "cac6170c001242a1",
+      "item": {
+        "type": "paragraph",
+        "id": "cac6170c001242a1",
+        "text": "Welcome to [[Wiki Desktop]], an experimental fork of [[Federated Wiki]]"
+      },
+      "date": 1550554984484
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "87e72e9c955a16f2"
+      },
+      "id": "87e72e9c955a16f2",
+      "type": "add",
+      "after": "cac6170c001242a1",
+      "date": 1550554997173
+    },
+    {
+      "type": "remove",
+      "id": "87e72e9c955a16f2",
+      "date": 1550555019022
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "9f72e002bc46e8a4"
+      },
+      "id": "9f72e002bc46e8a4",
+      "type": "add",
+      "after": "cac6170c001242a1",
+      "date": 1550555040576
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something"
+      },
+      "date": 1550555047144
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {
+          "new workspace": []
+        }
+      },
+      "date": 1550555147050
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {
+          "new workspace": [
+            "test-more-stuff"
+          ]
+        }
+      },
+      "date": 1550555152581
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {}
+      },
+      "date": 1550555157252
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {
+          "new": []
+        }
+      },
+      "date": 1550555538840
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {
+          "new": [
+            "new-page-title"
+          ]
+        }
+      },
+      "date": 1550555543210
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {}
+      },
+      "date": 1550555553982
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {
+          "test a new one": []
+        }
+      },
+      "date": 1550555613741
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {
+          "how to wiki": [
+            "how-to-wiki"
+          ]
+        }
+      },
+      "date": 1550555692960
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {
+          "how to wiki": [
+            "how-to-wiki"
+          ]
+        }
+      },
+      "date": 1550555700117
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {
+          "how to wiki": [
+            "how-to-wiki"
+          ]
+        }
+      },
+      "date": 1550555887613
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {
+          "how to wiki": [
+            "how-to-wiki"
+          ]
+        }
+      },
+      "date": 1550555892742
+    },
+    {
+      "type": "edit",
+      "id": "cac6170c001242a1",
+      "item": {
+        "type": "paragraph",
+        "id": "cac6170c001242a1",
+        "text": "Welcome to [[Wiki Desktop]], an experimental fork of [[Federated Wiki]] "
+      },
+      "date": 1550555901238
+    },
+    {
+      "type": "edit",
+      "id": "9f72e002bc46e8a4",
+      "item": {
+        "type": "home",
+        "id": "9f72e002bc46e8a4",
+        "text": "something",
+        "workspaces": {
+          "how to wiki": [
+            "how-to-wiki"
+          ]
+        }
+      },
+      "date": 1550555918391
+    }
+  ]
+}
