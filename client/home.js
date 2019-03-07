@@ -404,7 +404,7 @@ const updateWorkspaces = ($workspaces) => {
   $workspaces.append($table)
 }
 
-const waitIdle = async () => new Promise(resolve => setTimeout(() => requestIdleCallback(resolve), 500))
+const waitIdle = async () => new Promise(resolve => setTimeout(() => requestIdleCallback(resolve),50))
 
 const createWorkspaces = ($page) => {
   const $workspaces = $(`<div class="sidebar-workspaces"></div>`)
