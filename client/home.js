@@ -1,4 +1,6 @@
 (function wikiPluginHome(){
+
+window.requestIdleCallback = window.requestIdleCallback || (cb => setTimeout(() => cb(true),10))
   
 let state = {}
 
@@ -295,7 +297,7 @@ const makeControlsAuthenticatedButtons = ($controls, item) => ([
   makeCreateWorkspaceButton($controls, item),
   makeDeleteWorkspaceButton($controls, item),
   makeAddWorkspacePageButtton($controls, item),
-  makeDeleteWorkspacePageButton($controls, item)
+  makeDeleteWorkspacePageButton($controls, item),
 ])
 
 const makeControlsClaimedButtons = ($controls, item) => {
@@ -313,6 +315,31 @@ const makeControlsClaimedButtons = ($controls, item) => {
   
 }
 
+const makeCreateWikiButton = ($controls, item) => {
+  const $create_wiki = $(`<button class="sidebar-button">Create Wiki</button>`)
+
+  $create_wiki.click(async (e) => {
+    const prefix = prompt(
+      `Enter the name for the new wiki, this will also be used as the url prefix (e.g. "bob" will yield a wiki at "bob.${location.host}")`,
+      'bob'
+    )
+
+    $.ajax({
+      type : 'PUT',
+      url : `${location.origin}/sites/create/${prefix}`,
+      success : (res) => {
+        alert(`created wiki ${res.name}.${location.host}, COPY THIS TOKEN AND EMAIL IT TO THE PERSON YOU WANT TO OWN THE NEW WIKI:\n\n${res.friend.secret}`)
+        console.log("sucess", res)
+      },
+      error : (e) => {
+        alert('got an error'+ e.message)
+      }
+    })
+  })
+
+  return $create_wiki 
+}
+
 const makeControlsUnclaimedButtons = ($controls, item) => {
   const $Login = $(`<button class="sidebar-button">Claim</button>`)
 
@@ -325,12 +352,22 @@ const makeControlsUnclaimedButtons = ($controls, item) => {
   return [$Login]  
 }
 
+const makeControlsAdminButtons = ($controls, item) => {
+  return makeControlsAuthenticatedButtons($controls, item).concat([
+    makeCreateWikiButton($controls, item)//,
+    //makeDeleteWikiButton($controls, item)
+  ])
+}
+
+
 const updateControls = ($controls) => {
   console.log("IIIIIIII", state.item)
   const item = state.item
 
   let buttons = null
-  if (state.isAuthenticated){
+  if (state.isAdmin){
+    buttons = makeControlsAdminButtons($controls, item)
+  } else if (state.isAuthenticated){
     console.log('isAuthenticcated')
     buttons = makeControlsAuthenticatedButtons($controls,item)
   } else if (state.isClaimed){
@@ -354,7 +391,7 @@ const createControls = ($page, item) => {
 }
 
 const makeControlsClaimButtons = ($page, item) => {
-  const $claim = $(`<button class="sidebar-button">${"Claim Wiki"}</button>`)
+  const $claim = $(`<button class="sidebar-button">${ "Claim Wiki" }</button>`)
 
   $claim.click((e) => {
     const $reclaim = $(`select[title="Claim this Wiki"]`)
@@ -372,7 +409,9 @@ const updateWorkspaces = ($workspaces) => {
 
   const $table = $('<table style="width:100%;"></table>')
 
-  for (const name in item.workspaces){
+  const workspaces = state.isAuthenticated ? item.workspaces : []
+
+  for (const name in workspaces){
     const $space = $(`
       <tr style="display:flex;justify-content:space-between;">
         <td>
@@ -435,7 +474,21 @@ const createSidebar = ($item) => {
   }
 }
 
-const stateChange = () => {
+const _isAdmin = async () => new Promise((resolve) => {
+  $.ajax({
+    type : 'GET',
+    url : `${location.origin}/is_admin`,
+    success : (res) => {
+      resolve(true)
+    },
+    error : (e) => {
+      resolve(false)
+    }
+  })
+
+})
+
+const stateChange = async () => {
   const changes = {}
 
   if (isClaimed !== state.isClaimed){
@@ -446,6 +499,13 @@ const stateChange = () => {
   if (isAuthenticated !== state.isAuthenticated){
     changes.isAuthenticated = true
     state.isAuthenticated = isAuthenticated
+
+    const isAdmin = await _isAdmin()
+    console.log("ISADMIN RES", isAdmin)
+    if (isAdmin !== state.isAdmin){
+      changes.isAdmin = true
+      state.isAdmin = isAdmin
+    }
   }
 
   if (state.sitemap_changed){
@@ -483,6 +543,7 @@ const maybeUpdateIndex = ($index, changes) => {
 }
 
 const emit = async ($item, item) => {
+  console.log("EMIT PLUGINS")
   console.log('HOME EMIT', $item, item, isAuthenticated)
 
   const {
@@ -492,10 +553,11 @@ const emit = async ($item, item) => {
   } = createSidebar($item)
 
   state = await getInitialState(item) 
+  console.log("START LOOP")
 
   while (await waitIdle()){
-    //console.log('idle', $controls);
-    const changes = stateChange();
+    console.log('idle') ;
+    const changes = await stateChange();
     //console.log('changes', changes);
     maybeUpdateControls($controls, changes);
     //console.log('1')
