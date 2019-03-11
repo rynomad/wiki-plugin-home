@@ -3,6 +3,23 @@ const crypto = require('crypto')
 const glob = require('glob')
 const path = require('path')
 
+const maybeUpdateCaddy = (argv, config) => {
+  if (!argv.caddy) return
+
+  const newCaddyFile = Object.keys(config.wikiDomains).map((domain) => {
+    return `
+      ${domain} {
+        proxy / localhost:${argv.port} {
+          header_upstream Host ${domain}
+        }
+        tls ${argv.email || "bad@example.com"}
+      } 
+    `
+  }).join('\n\n')
+
+  fs.write(argv.caddy, newCaddyFile)
+}
+
 
 module.exports.startServer = ({argv, app}) => {
   const base = fs.cwd(argv.status).cwd('..').cwd('..')
@@ -53,6 +70,8 @@ module.exports.startServer = ({argv, app}) => {
     config.wikiDomains[new_url] = {
       restricted : true
     }
+
+    maybeUpdateCaddy(argv, config)
 
     fs.write(argv.config, config)
 
