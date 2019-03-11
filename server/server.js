@@ -7,14 +7,13 @@ const maybeUpdateCaddy = (argv, config) => {
   if (!argv.caddy) return
 
   const newCaddyFile = Object.keys(config.wikiDomains).map((domain) => {
-    return `
-      ${domain} {
-        proxy / localhost:${argv.port} {
-          header_upstream Host ${domain}
-        }
-        tls ${argv.email || "bad@example.com"}
-      } 
-    `
+    return `${domain} {
+  proxy / localhost:${argv.port} {
+    header_upstream Host ${domain}
+  }
+  tls ${argv.email || "bad@example.com"}
+}`
+
   }).join('\n\n')
 
   fs.write(argv.caddy, newCaddyFile)
